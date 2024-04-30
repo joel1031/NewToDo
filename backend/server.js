@@ -1,8 +1,13 @@
 //Import express
 const express = require('express');
-
 //Create an instance of express called 'app'
 const app = express();
+const PORT = process.env.PORT || 5000;
+const { connect } = require('./database');
+
+//Connect to the database
+connect();
+
 
 const router = require('./routes');
 app.use('/api', router);

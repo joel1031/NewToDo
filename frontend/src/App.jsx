@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
 export default function App() {
-  const[message, setMessage] = useState("");
+  const[todos, setTodos] = useState("");
   
   useEffect(() => {
     const getTodos = async() => {
       const res = await fetch("/api/todos");
       const todos = await res.json();
 
-      setMessage(todos.mssg);
+      setTodos(todos);
     };
 
     getTodos();
@@ -19,7 +19,9 @@ export default function App() {
   return (
     <main className="container">
       <h1>ToDo App</h1>
-      {message && <p>{message}</p>}
+      <div>
+      {(todos.length > 0) && <pre>{JSON.stringify(todos, null, 2)}</pre>}
+      </div>
     </main>
   );
 }

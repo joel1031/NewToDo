@@ -28,6 +28,9 @@ router.post("/todos", async (req, res) => {
 router.put("/todos/:id",  async (req, res) => {
     const { todo, status } = req.body;
     try{
+        if(typeof status !== "boolean"){
+            res.status(400).json({ mssg: "Status must be a boolean" });
+        };
         const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, { todo, status }, { new: true });
         if(!updatedTodo){
             res.status(404).json({ mssg: "Todo not found" });

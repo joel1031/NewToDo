@@ -8,6 +8,8 @@ const { connect } = require('./database');
 //Connect to the database
 connect();
 
+//Middleware
+app.use(express.json());
 
 const router = require('./routes');
 app.use('/api', router);

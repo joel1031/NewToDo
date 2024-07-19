@@ -10,6 +10,7 @@ const router = require('./routes');
 
 //create an express app
 const app = express();
+app.use(express.json());
 
 //use /api to prefix all routes
 app.use("/api", router);

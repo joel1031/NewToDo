@@ -1,27 +1,26 @@
 require("dotenv").config();
-//import express library
-const express = require('express');
+const express = require("express");
+const { connectToMongoDB } = require("./database");
+const path = require("path");
 
-//import connectToMongoDB function from database.js
-const {connectToMongoDB} = require('./database');
-
-//import routes from routes.js
-const router = require('./routes');
-
-//create an express app
 const app = express();
 app.use(express.json());
 
-//use /api to prefix all routes
+app.use(express.static(path.join(__dirname, "build")));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "build/index.html"));
+})
+
+
+const router = require("./routes");
 app.use("/api", router);
 
-//make a port for the server to listen on
 const port = process.env.PORT || 5000;
 
-const startServer = async() => {
+async function startServer() {
     await connectToMongoDB();
     app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+        console.log(`Server is listening on http://localhost:${port}`);
     });
-};
+}
 startServer();
